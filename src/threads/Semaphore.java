@@ -4,7 +4,7 @@ public class Semaphore {
     private boolean canWrite = true;
 
     public synchronized void beginRead() throws InterruptedException{
-        while(canWrite){
+        while (canWrite){
             wait();
         }
     }

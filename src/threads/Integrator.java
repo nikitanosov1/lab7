@@ -16,13 +16,16 @@ public class Integrator extends Thread{
     public void run() {
         try {
             for (int i = 0; i < task.getCountRunningTasks(); i++) {
-                semaphore.beginRead();
-                double result = Functions.integrate(task.getFunction(), task.getLeft(), task.getRight(), task.getStep());
-                System.out.println("Result " + task.getLeft() + " " + task.getRight() + " " + task.getStep() + " " + result);
-                semaphore.endRead();
+                if (!isInterrupted()) {
+                    semaphore.beginRead();
+                    double result = Functions.integrate(task.getFunction(), task.getLeft(), task.getRight(), task.getStep());
+                    System.out.println("Result " + task.getLeft() + " " + task.getRight() + " " + task.getStep() + " " + result);
+                    semaphore.endRead();
+                }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 }

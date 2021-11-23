@@ -45,6 +45,7 @@ public class Main {
         */
         thread1.start();
         thread2.start();
+
     }
 
     public static void complicatedThreads(){
@@ -54,7 +55,20 @@ public class Main {
         Semaphore semaphore = new Semaphore();
         Thread thread1 = new Thread(new Generator(task, semaphore));
         Thread thread2 = new Thread(new Integrator(task, semaphore));
+
+
+        thread1.setPriority(2);
+        thread2.setPriority(4);
+
+
         thread1.start();
         thread2.start();
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        thread1.interrupt();
+        thread2.interrupt();
     }
 }
